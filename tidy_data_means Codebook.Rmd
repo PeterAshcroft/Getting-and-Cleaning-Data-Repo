@@ -1,0 +1,104 @@
+---
+title: "tidy_data_means Codebook"
+author: "Peter Ashcroft"
+date: "Friday, December 19, 2014"
+output: html_document
+---
+
+*tidy_data_means* is a table of 180 rows and 68 columns. The 180 rows correspond to all combinations of 30 subjects for the following 6 activities. 
+
+The complete list of activities is:
+
+* LAYING
+* SITTING
+* STANDING
+* WALKING
+* WALKING_DOWNSTAIRS
+* WALKING_UPSTAIRS
+
+The first two columns of the table are the *Subject* and *Activity*.
+
+The remaining 66 columns are the means (for each combination of subject and activity) of each of 66 measurements originally extracted from *https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip* Note that the values in the table are means of other measurements that were, themselves, means and standard deviations. 
+
+The name of each measurement is composed of up to six elements describing the basis for the measurement. The components are the following.
+
+* *time* or *freq*, reflecting whether the measurement is based on time-domain measurements or frequency-domain analysis of the original *time-domain* measurements.
+
+* *Body* or *Grav*, reflecting whether the measurement is based on measurements of subject body acceleration, or just the gravity component of the acceleration.
+
+* *Acc* or *Gyro*, reflecting whether the base measurement comes from an accelerometer or a gyroscope.
+
+* An optional *Jerk*, reflecting whether the measurement is a computed jerk.
+
+* *X*, *Y*, *Z*, or *Mag*, reflecting the axis of the measurement, or the magnitude.
+
+* *-mean* or *-std*, reflecting whether the measurement is a mean or a standard deviation.
+
+The complete list of measurements for which the mean has been calculated is:
+
+* timeBodyAccX-mean
+* timeBodyAccY-mean
+* timeBodyAccZ-mean
+* timeBodyAccX-std
+* timeBodyAccY-std
+* timeBodyAccZ-std
+* timeGravAccX-mean
+* timeGravAccY-mean
+* timeGravAccZ-mean
+* timeGravAccX-std
+* timeGravAccY-std
+* timeGravAccZ-std
+* timeBodyAccJerkX-mean
+* timeBodyAccJerkY-mean
+* timeBodyAccJerkZ-mean
+* timeBodyAccJerkX-std
+* timeBodyAccJerkY-std
+* timeBodyAccJerkZ-std
+* timeBodyGyroX-mean
+* timeBodyGyroY-mean
+* timeBodyGyroZ-mean
+* timeBodyGyroX-std
+* timeBodyGyroY-std
+* timeBodyGyroZ-std
+* timeBodyGyroJerkX-mean
+* timeBodyGyroJerkY-mean
+* timeBodyGyroJerkZ-mean
+* timeBodyGyroJerkX-std
+* timeBodyGyroJerkY-std
+* timeBodyGyroJerkZ-std
+* timeBodyAccMag-mean
+* timeBodyAccMag-std
+* timeGravAccMag-mean
+* timeGravAccMag-std
+* timeBodyAccJerkMag-mean
+* timeBodyAccJerkMag-std
+* timeBodyGyroMag-mean
+* timeBodyGyroMag-std
+* timeBodyGyroJerkMag-mean
+* timeBodyGyroJerkMag-std
+* freqBodyAccX-mean
+* freqBodyAccY-mean
+* freqBodyAccZ-mean
+* freqBodyAccX-std
+* freqBodyAccY-std
+* freqBodyAccZ-std
+* freqBodyAccJerkX-mean
+* freqBodyAccJerkY-mean
+* freqBodyAccJerkZ-mean
+* freqBodyAccJerkX-std
+* freqBodyAccJerkY-std
+* freqBodyAccJerkZ-std
+* freqBodyGyroX-mean
+* freqBodyGyroY-mean
+* freqBodyGyroZ-mean
+* freqBodyGyroX-std
+* freqBodyGyroY-std
+* freqBodyGyroZ-std
+* freqBodyAccMag-mean
+* freqBodyAccMag-std
+* freqBodyAccJerkMag-mean
+* freqBodyAccJerkMag-std
+* freqBodyGyroMag-mean
+* freqBodyGyroMag-std
+* freqBodyGyroJerkMag-mean
+* freqBodyGyroJerkMag-std

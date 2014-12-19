@@ -1,0 +1,88 @@
+---
+title: "README"
+author: "Peter Ashcroft"
+date: "Friday, December 19, 2014"
+output: html_document
+---
+
+This README file describes the steps of the run_analysis.R script. Note that the script also includes comments describing its function.
+
+### Preparation
+Read in all the data from the archive. (This assumes that the dataset has been downloaded and unzipped into the working directory.) 
+
+The code to read the files is as follows:
+```
+x_test <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/test/x_test.txt")
+y_test <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/test/y_test.txt")
+subject_test <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/test/subject_test.txt")
+
+x_train <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/train/x_train.txt")
+y_train <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/train/y_train.txt")
+subject_train <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/train/subject_train.txt")
+```
+
+*x_test* and *x_train* are the heart of the data -- 2947 and 7352 rows respectively of 561 computed variables. The 2947 "test" records are to combined with the 7352 "train" records into a single data set.
+
+*y_test* and *y_train* are vectors of 2947 and 7352 elements respectively, containing the numbers 1-6, indicating one of six differnt activities for each record.
+
+*subject_test* and *subject_train* are vectors of 2947 and 7352 elements respectively, containing the numbers 1-30, indicating one of 30 different test subjects for each record.
+
+```
+features <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/features.txt")
+activity_labels <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/activity_labels.txt")
+```
+*features* is a list of the 561 differnt measurements of the complete data set.
+
+*activity_labels* is a list of the six activities corresponding to the six values in the *y_test* and *y_train* vectors.
+
+### Task 1) Merge the training and the test sets to create one data set
+```
+data <- rbind(cbind(x_train,subject_train,y_train),
+              cbind(x_test,subject_test,y_test))
+```
+The assembled data set has 10299 records, each of which includes 561 measurements, a subject number, and an activity number. The result is a table with 10299 rows and 563 columns.
+
+Add the 561 column names for measurements, as well as a column name for the subject and for the activity:
+```
+colnames(data) <- features[,2]
+colnames(data)[562:563] <- c("Subject","Activity")
+```
+
+### Task 2) Extract only the measurements on the mean and standard deviation for each measurement 
+The list of features to keep was generated offline, selecting only those 66 features that are means or stds. That list is then used to create a new table. 
+```
+features_to_keep <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/features(columns to be extracted).txt")
+data_means_std <- data[,c(as.character(features_to_keep[,2]),"Subject","Activity")]
+```
+
+### Task 3) Use descriptive activity names to name the activities in the data set
+```
+data_means_std[,"Activity"] <- activity_labels[data_means_std[,"Activity"],2]
+```
+
+### Task 4) Appropriately label the data set with descriptive variable names 
+The cleaned list of features was generated offline. The cleaned features eliminate some errors and modify the names to make them more self-explanatory.
+```
+clean_descriptors <- read.table("getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset/features(clean variable names).txt")
+colnames(data_means_std) <- clean_descriptors[,2]
+colnames(data_means_std)[67:68] <- c("Subject","Activity")
+```
+
+### Task 5) From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject
+```
+data_means <- aggregate(data_means_std[,1:66],by=list(data_means_std$Activity,data_means_std$Subject),mean)
+```
+Swap first two columns for aesthetic reasons
+```
+data_means <- cbind(data_means[,2],data_means[,1],data_means[,3:68])
+```
+Label first two columns
+```
+colnames(data_means)[1:2] <- c("Subject","Activity")
+```
+
+### Write the resulting table
+```
+write.table(data_means,"tidy_data_means.txt",row.names = FALSE)
+```
+
